@@ -14,3 +14,4 @@ Promise.reject().catch((err) => {
 should([1, 2]).have.length(2);
 should(foo(bar));
 should(foo.bar).be.eql(1);
+should(foo).eql(1);
