@@ -12,10 +12,14 @@
     "lint-staged": ">=10",
     "prettier": "2.2.0"
   },
+  "scripts": {
+    "test": "yarn jest",
+    "test:watch": "yarn jest --watchAll"
+  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
-      "pre-push": "yarn jest"
+      "pre-push": "yarn test"
     }
   },
   "lint-staged": {
