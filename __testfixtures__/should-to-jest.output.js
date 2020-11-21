@@ -20,4 +20,5 @@ expect(foo).toEqual(1);
 // preserve-comments
 expect(foo).toEqual(1);
 expect(foo).toEqual({});
-
+// preserve-floating-comments
+somethingThatDoesntMatch();

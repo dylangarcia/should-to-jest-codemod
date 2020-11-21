@@ -127,6 +127,7 @@ module.exports = function transform(file, api) {
     if (!didMatchAny) {
       undo();
       expectedUndo();
+      expressionNode.value.comments = comments;
     }
   });
 
