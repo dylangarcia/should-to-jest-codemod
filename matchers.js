@@ -25,6 +25,7 @@ const matchers = {
   'should()': (actual, expected) => `expect(${expected}).toBe(true)`,
   'actual.should.be.above()': (actual, expected) =>
     `expect(${actual}).toBeGreaterThan(${expected})`,
+  'actual.should.be.true': (actual, expected) => `expect(${actual}).toBe(true)`,
 };
 
 module.exports = matchers;

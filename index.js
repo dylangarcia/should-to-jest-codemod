@@ -80,7 +80,7 @@ module.exports = function transform(file, api) {
       expressionNode.value.expression,
     );
     const maybePrototypeCallee = isPrototypeShould(
-      expressionNode.value.expression.callee,
+      expressionNode.value.expression.callee || expressionNode.value.expression,
     );
 
     const comments = expressionNode.value.comments;

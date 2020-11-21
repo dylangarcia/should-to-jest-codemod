@@ -23,3 +23,4 @@ expect(foo).toEqual({});
 // preserve-floating-comments
 somethingThatDoesntMatch();
 expect(foo.length).toBeGreaterThan(5);
+expect(foo).toBe(true);
