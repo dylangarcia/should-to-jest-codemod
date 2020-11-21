@@ -28,3 +28,4 @@ foo.should.be.true;
 should.throws(function() {
 	throw new Error('kaboom');
 }, /kaboom/i);
+things.map(thing => isThing(thing).should.be.eql(true));

@@ -133,16 +133,20 @@ module.exports = function transform(file, api) {
 
   root.find(j.CallExpression).forEach((callExpression) => {
     if (
-      !callExpression.value ||
-      !callExpression.value.callee.object ||
-      !callExpression.value.callee.object.callee ||
-      callExpression.value.callee.object.callee.name !== 'should'
+      callExpression.name !== 'body' &&
+      (!callExpression.value ||
+        !callExpression.value.callee.object ||
+        !callExpression.value.callee.object.callee ||
+        callExpression.value.callee.object.callee.name !== 'should')
     ) {
       return;
     }
+
     let [actual, undo] = getArguments(callExpression.value.callee);
     let [expected, expectedUndo] = getArguments(callExpression.value);
-    const maybePrototypeCallee = isPrototypeShould(callExpression);
+    const maybePrototypeCallee = isPrototypeShould(
+      callExpression.value.callee || callExpression.value,
+    );
 
     let didMatchAny = false;
 

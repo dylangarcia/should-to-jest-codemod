@@ -28,3 +28,4 @@ expect((foo === bar)).toBe(true);
 expect(function() {
 	throw new Error('kaboom');
 }).toThrow(/kaboom/i);
+things.map(thing => expect(isThing(thing)).toEqual(true));
