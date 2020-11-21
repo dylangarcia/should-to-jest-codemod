@@ -30,3 +30,4 @@ should.throws(function() {
 }, /kaboom/i);
 things.map(thing => isThing(thing).should.be.eql(true));
 foo["bar"].length.should.be.equal(1);
+foo.fields.should.containEql(bar.id);

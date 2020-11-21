@@ -32,6 +32,8 @@ const matchers = {
     `expect(${actual}).toBe(true)`,
   'should.throws()': (actual, expected) =>
     `expect(${expected[0]}).toThrow(${expected[1]})`,
+  'actual.should.containEql()': (actual, expected) =>
+    `expect(${actual}).toContainEqual(${expected})`,
 };
 
 module.exports = matchers;

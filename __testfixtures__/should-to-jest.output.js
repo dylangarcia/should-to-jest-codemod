@@ -30,3 +30,4 @@ expect(function() {
 }).toThrow(/kaboom/i);
 things.map(thing => expect(isThing(thing)).toEqual(true));
 expect(foo["bar"].length).toEqual(1);
+expect(foo.fields).toContainEqual(bar.id);
