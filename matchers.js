@@ -20,6 +20,8 @@ const matchers = {
     `expect(${actual}).toEqual(${expected})`,
   'should().be.equal()': (actual, expected) =>
     `expect(${actual}).toEqual(${expected})`,
+  'actual.should.be.equal()': (actual, expected) =>
+    `expect(${actual}).toEqual(${expected})`,
   'should().equal()': (actual, expected) =>
     `expect(${actual}).toEqual(${expected})`,
   'should()': (actual, expected) => `expect(${expected}).toBe(true)`,

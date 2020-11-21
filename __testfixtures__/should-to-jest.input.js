@@ -29,3 +29,4 @@ should.throws(function() {
 	throw new Error('kaboom');
 }, /kaboom/i);
 things.map(thing => isThing(thing).should.be.eql(true));
+foo["bar"].length.should.be.equal(1);
