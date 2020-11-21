@@ -8,7 +8,6 @@ This is a jscodeshift codemod that helps transforms legacy `should` tests to Jes
 yarn jscodeshift \
   -t index.js \
   file-to-transform.js
-  --parser flow
 ```
 
 ### Examples
