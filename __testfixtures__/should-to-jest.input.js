@@ -22,3 +22,4 @@ should(foo).equal(1);
 foo.should.be.eql({});
 // preserve-floating-comments
 somethingThatDoesntMatch();
+foo.length.should.be.above(5);
