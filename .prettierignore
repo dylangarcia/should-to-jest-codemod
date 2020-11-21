@@ -1,1 +1,3 @@
 node_modules/*
+__testfixtures__/*.input.js
+__testfixtures__/*.output.js

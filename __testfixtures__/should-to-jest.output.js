@@ -7,3 +7,7 @@ expect(err.toString()).not.toMatch(/first/);
 expect(foo('bar')).toMatch(/baz/);
 expect(foo(bar('baz'))).toMatch(/baz/);
 expect(foo.bar.baz).toEqual('testeroni');
+Promise.reject().catch(err => expect(err.message).toMatch(/cannot complete operation/i));
+Promise.reject().catch((err) => {
+  expect(err.message).toMatch(/cannot complete operation/i);
+});

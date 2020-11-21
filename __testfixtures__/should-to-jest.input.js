@@ -7,3 +7,7 @@ err.toString().should.not.match(/first/);
 foo('bar').should.match(/baz/);
 foo(bar('baz')).should.match(/baz/);
 foo.bar.baz.should.eql('testeroni');
+Promise.reject().catch((err) => should(err.message).match(/cannot complete operation/i));
+Promise.reject().catch((err) => {
+  should(err.message).match(/cannot complete operation/i);
+});

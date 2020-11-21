@@ -47,7 +47,12 @@ const getArguments = (node) => {
 module.exports = function transform(file, api) {
   const j = api.jscodeshift;
 
-  const is = (a, b) => j(a).toSource() === j(b).toSource();
+  const is = (a, b) => {
+    const aSource = j(a).toSource();
+    const bSource = j(b).toSource();
+
+    return aSource === bSource || `${aSource};` === bSource;
+  };
 
   const isPrototypeShould = (node, replacer = j.identifier('actual')) => {
     let root = node;
@@ -67,51 +72,97 @@ module.exports = function transform(file, api) {
   const parseRawLine = (line) =>
     cleanNode(asJSON(j(line).find(j.ExpressionStatement).nodes()[0]));
 
-  const expressions = j(file.source).find(j.ExpressionStatement);
+  const root = j(file.source);
 
-  return expressions
-    .forEach((expressionNode) => {
-      let [actual, undo] = getArguments(expressionNode.value.expression.callee);
-      let [expected, expectedUndo] = getArguments(
-        expressionNode.value.expression,
-      );
-      const maybePrototypeCallee = isPrototypeShould(
-        expressionNode.value.expression.callee,
-      );
+  root.find(j.ExpressionStatement).forEach((expressionNode) => {
+    let [actual, undo] = getArguments(expressionNode.value.expression.callee);
+    let [expected, expectedUndo] = getArguments(
+      expressionNode.value.expression,
+    );
+    const maybePrototypeCallee = isPrototypeShould(
+      expressionNode.value.expression.callee,
+    );
 
-      let didMatchAny = false;
+    let didMatchAny = false;
 
-      Object.keys(matchers).forEach((matcher) => {
-        const line = parseRawLine(matcher);
+    Object.keys(matchers).forEach((matcher) => {
+      const line = parseRawLine(matcher);
 
-        if (!expressionNode.value || !expressionNode.value.expression) {
-          return;
-        }
-
-        if (maybePrototypeCallee) {
-          actual = maybePrototypeCallee;
-        }
-
-        actual = actual || [];
-        expected = expected || [];
-
-        if (is(expressionNode, line)) {
-          actual = j(actual).toSource();
-          expected = j(expected).toSource();
-          j(expressionNode).replaceWith(matchers[matcher](actual, expected));
-          didMatchAny = true;
-        } else {
-          if (maybePrototypeCallee) {
-            // reinstate the bar in "foo(bar)[0].should.match(/baz/)"
-            maybePrototypeCallee.object = maybePrototypeCallee;
-          }
-          undo();
-        }
-      });
-
-      if (!didMatchAny) {
-        expectedUndo();
+      if (!expressionNode.value || !expressionNode.value.expression) {
+        return;
       }
-    })
-    .toSource();
+
+      if (maybePrototypeCallee) {
+        actual = maybePrototypeCallee;
+      }
+
+      actual = actual || [];
+      expected = expected || [];
+
+      if (is(expressionNode, line)) {
+        actual = j(actual).toSource();
+        expected = j(expected).toSource();
+        j(expressionNode).replaceWith(
+          matchers[matcher](actual, expected) + ';',
+        );
+        didMatchAny = true;
+      } else {
+        if (maybePrototypeCallee) {
+          // reinstate the bar in "foo(bar)[0].should.match(/baz/)"
+          maybePrototypeCallee.object = maybePrototypeCallee;
+        }
+        undo();
+      }
+    });
+
+    if (!didMatchAny) {
+      expectedUndo();
+    }
+  });
+
+  root.find(j.CallExpression).forEach((callExpression) => {
+    if (
+      !callExpression.value ||
+      !callExpression.value.callee.object ||
+      !callExpression.value.callee.object.callee ||
+      callExpression.value.callee.object.callee.name !== 'should'
+    ) {
+      return;
+    }
+    let [actual, undo] = getArguments(callExpression.value.callee);
+    let [expected, expectedUndo] = getArguments(callExpression.value);
+    const maybePrototypeCallee = isPrototypeShould(callExpression);
+
+    let didMatchAny = false;
+
+    Object.keys(matchers).forEach((matcher) => {
+      const line = parseRawLine(matcher);
+
+      if (maybePrototypeCallee) {
+        actual = maybePrototypeCallee;
+      }
+
+      actual = actual || [];
+      expected = expected || [];
+
+      if (is(callExpression, line)) {
+        actual = j(actual).toSource();
+        expected = j(expected).toSource();
+        j(callExpression).replaceWith(matchers[matcher](actual, expected));
+        didMatchAny = true;
+      } else {
+        if (maybePrototypeCallee) {
+          // reinstate the bar in "foo(bar)[0].should.match(/baz/)"
+          maybePrototypeCallee.object = maybePrototypeCallee;
+        }
+        undo();
+      }
+    });
+
+    if (!didMatchAny) {
+      expectedUndo();
+    }
+  });
+
+  return root.toSource();
 };
