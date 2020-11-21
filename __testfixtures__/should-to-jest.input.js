@@ -25,3 +25,6 @@ somethingThatDoesntMatch();
 foo.length.should.be.above(5);
 foo.should.be.true;
 (foo === bar).should.be.true;
+should.throws(function() {
+	throw new Error('kaboom');
+}, /kaboom/i);

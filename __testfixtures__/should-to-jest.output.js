@@ -25,3 +25,6 @@ somethingThatDoesntMatch();
 expect(foo.length).toBeGreaterThan(5);
 expect(foo).toBe(true);
 expect((foo === bar)).toBe(true);
+expect(function() {
+	throw new Error('kaboom');
+}).toThrow(/kaboom/i);

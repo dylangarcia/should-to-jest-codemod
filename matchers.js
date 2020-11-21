@@ -28,6 +28,8 @@ const matchers = {
   'actual.should.be.true': (actual, expected) => `expect(${actual}).toBe(true)`,
   '(actual).should.be.true': (actual, expected) =>
     `expect(${actual}).toBe(true)`,
+  'should.throws()': (actual, expected) =>
+    `expect(${expected[0]}).toThrow(${expected[1]})`,
 };
 
 module.exports = matchers;
