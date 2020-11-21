@@ -12,6 +12,8 @@ const matchers = {
     `expect(${actual}).toMatch(${expected})`,
   'actual.should.eql()': (actual, expected) =>
     `expect(${actual}).toEqual(${expected})`,
+  'should().be.eql()': (actual, expected) =>
+    `expect(${actual}).toEqual(${expected})`,
   'should()': (actual, expected) => `expect(${expected}).toBe(true)`,
 };
 

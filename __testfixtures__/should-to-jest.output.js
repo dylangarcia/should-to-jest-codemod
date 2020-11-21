@@ -13,3 +13,4 @@ Promise.reject().catch((err) => {
 });
 expect([1, 2]).toHaveLength(2);
 expect(foo(bar)).toBe(true);
+expect(foo.bar).toEqual(1);
