@@ -6,3 +6,4 @@ expect(err.problems[0]).toMatch(/oopsies/i);
 expect(err.toString()).not.toMatch(/first/);
 expect(foo('bar')).toMatch(/baz/);
 expect(foo(bar('baz'))).toMatch(/baz/);
+expect(foo.bar.baz).toEqual('testeroni');
