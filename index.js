@@ -110,12 +110,13 @@ module.exports = function transform(file, api) {
         if (maybePrototypeCallee) {
           // reinstate the bar in "foo(bar)[0].should.match(/baz/)"
           maybePrototypeCallee.object = maybePrototypeCallee;
+          if (!didMatchAny) undo();
         }
-        undo();
       }
     });
 
     if (!didMatchAny) {
+      undo();
       expectedUndo();
     }
   });
@@ -154,12 +155,13 @@ module.exports = function transform(file, api) {
         if (maybePrototypeCallee) {
           // reinstate the bar in "foo(bar)[0].should.match(/baz/)"
           maybePrototypeCallee.object = maybePrototypeCallee;
+          if (!didMatchAny) undo();
         }
-        undo();
       }
     });
 
     if (!didMatchAny) {
+      undo();
       expectedUndo();
     }
   });

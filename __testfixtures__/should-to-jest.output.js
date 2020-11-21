@@ -11,3 +11,4 @@ Promise.reject().catch(err => expect(err.message).toMatch(/cannot complete opera
 Promise.reject().catch((err) => {
   expect(err.message).toMatch(/cannot complete operation/i);
 });
+expect([1, 2]).toHaveLength(2);
