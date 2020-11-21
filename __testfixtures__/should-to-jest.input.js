@@ -19,3 +19,4 @@ should(foo).be.equal(1);
 should(foo).equal(1);
 // preserve-comments
 should(foo).equal(1);
+foo.should.be.eql({});
