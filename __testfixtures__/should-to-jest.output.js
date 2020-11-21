@@ -16,3 +16,4 @@ expect(foo(bar)).toBe(true);
 expect(foo.bar).toEqual(1);
 expect(foo).toEqual(1);
 expect(foo).toEqual(1);
+expect(foo).toEqual(1);
