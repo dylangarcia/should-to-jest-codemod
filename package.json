@@ -1,0 +1,21 @@
+{
+  "name": "should-to-jest-codemod",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:dylangarcia/should-to-jest-codemod.git",
+  "author": "Dylan Garcia <dylan@webflow.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "husky": ">=4",
+    "lint-staged": ">=10",
+    "prettier": "2.2.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,css,md}": "prettier --write"
+  }
+}
