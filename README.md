@@ -1,13 +1,20 @@
 # should-to-jest-codemod
+![CI Build Status](https://github.com/dylangarcia/should-to-jest-codemod/workflows/Node.js%20CI/badge.svg)
 
-This is a jscodeshift codemod that helps transforms legacy `should` tests to Jest's `expect` format.
+This is a jscodeshift codemod that helps transforms legacy `should` tests to Jest's `expect` format. Tests are automatically run via a Github Actions workflow.
 
 ### Usage
 
-```js
+```bash
 yarn jscodeshift \
   -t index.js \
   file-to-transform.js
+```
+
+### Running Tests
+```bash
+yarn test
+yarn test:watch
 ```
 
 ### Examples
