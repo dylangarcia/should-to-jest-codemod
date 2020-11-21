@@ -24,3 +24,4 @@ expect(foo).toEqual({});
 somethingThatDoesntMatch();
 expect(foo.length).toBeGreaterThan(5);
 expect(foo).toBe(true);
+expect((foo === bar)).toBe(true);
