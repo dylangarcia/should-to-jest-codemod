@@ -83,6 +83,9 @@ module.exports = function transform(file, api) {
       expressionNode.value.expression.callee,
     );
 
+    const comments = expressionNode.value.comments;
+    expressionNode.value.comments = [];
+
     let didMatchAny = false;
 
     Object.keys(matchers).forEach((matcher) => {
@@ -103,8 +106,14 @@ module.exports = function transform(file, api) {
         actual = j(actual).toSource();
         expected = j(expected).toSource();
         j(expressionNode).replaceWith(
-          matchers[matcher](actual, expected) + ';',
+          j(matchers[matcher](actual, expected) + ';').nodes()[0].program
+            .body[0],
         );
+
+        if (comments) {
+          expressionNode.value.comments = comments;
+        }
+
         didMatchAny = true;
       } else {
         if (maybePrototypeCallee) {
@@ -149,7 +158,9 @@ module.exports = function transform(file, api) {
       if (is(callExpression, line)) {
         actual = j(actual).toSource();
         expected = j(expected).toSource();
-        j(callExpression).replaceWith(matchers[matcher](actual, expected));
+        j(callExpression).replaceWith(
+          j(matchers[matcher](actual, expected)).nodes()[0].program.body[0],
+        );
         didMatchAny = true;
       } else {
         if (maybePrototypeCallee) {
