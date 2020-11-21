@@ -12,3 +12,4 @@ Promise.reject().catch((err) => {
   should(err.message).match(/cannot complete operation/i);
 });
 should([1, 2]).have.length(2);
+should(foo(bar));

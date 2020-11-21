@@ -12,3 +12,4 @@ Promise.reject().catch((err) => {
   expect(err.message).toMatch(/cannot complete operation/i);
 });
 expect([1, 2]).toHaveLength(2);
+expect(foo(bar)).toBe(true);
