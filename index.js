@@ -2,6 +2,17 @@ const matchers = require('./matchers');
 
 const asJSON = (node) => JSON.parse(JSON.stringify(node));
 
+const fromEntries = (entries) => {
+  if (typeof Object.fromEntries === 'function') {
+    return Object.fromEntries(entries);
+  }
+
+  return entries.reduce((acc, entry) => {
+    acc[entry[0]] = entry[1];
+    return acc;
+  }, {});
+};
+
 const cleanNode = (node, keys = ['start', 'end', 'loc']) => {
   if (Array.isArray(node)) {
     return node.map((_node) => cleanNode(_node));
@@ -11,7 +22,7 @@ const cleanNode = (node, keys = ['start', 'end', 'loc']) => {
     return node;
   }
 
-  return Object.fromEntries(
+  return fromEntries(
     Object.entries(node)
       .filter(([key]) => !keys.includes(key))
       .map(([key, value]) => {
